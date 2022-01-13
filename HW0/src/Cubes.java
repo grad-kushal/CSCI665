@@ -1,3 +1,7 @@
+/**
+ * @author		Kushal Kale
+ */
+
 import java.util.Scanner;
 
 public class Cubes {
