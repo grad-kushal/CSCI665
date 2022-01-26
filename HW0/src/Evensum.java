@@ -12,7 +12,7 @@ public class Evensum {
         if(number > -1){
             for (int i = 0; i < number; i++){
                 int additionTerm = scanner.nextInt();
-                if(additionTerm % 2 == 0){
+                if(additionTerm > -1 && additionTerm % 2 == 0){
                     sum += additionTerm;
                 }
             }

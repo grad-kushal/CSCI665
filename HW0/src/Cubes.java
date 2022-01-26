@@ -9,7 +9,7 @@ public class Cubes {
         Scanner scanner = new Scanner(System.in);
         int number = scanner.nextInt();
         if(number > -1){
-            for (int i =0; Math.pow(i, 3) < number; i++){
+            for (int i =0; Math.pow(i, 3) <= number; i++){
                 System.out.println(i*i*i);
             }
         }
