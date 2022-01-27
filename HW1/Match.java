@@ -66,12 +66,6 @@ public class Match {
             int [] result1 = executeGayleShapely(freeAskers, integerPrefList1, integerPrefList2Inverse, currentPartners1, currentPartners2);
             int [] result2 = executeGayleShapely(freeResponders, integerPrefList2, integerPrefList1Inverse, currentPartners2, currentPartners1);
 
-//            for (int m: result1) {
-//                System.out.println(m);
-//            }
-//            for (int m: result2) {
-//                System.out.println(m);
-//            }
             System.out.println(Arrays.equals(result1, result2) ? "NO" : "YES");
         }catch (Exception e){
             e.printStackTrace();
@@ -93,27 +87,21 @@ public class Match {
                                            ArrayList<ArrayList<Integer>> integerPrefList2Inverse, int [] currentPartners1, int [] currentPartners2) {
         while (!freeAskers.isEmpty()){
             int asker = freeAskers.pop();                                           //take the 1st free asker
-            //System.out.println("LOGGER: Asker :" + asker);
             ArrayList<Integer> askerPrefList = integerPrefList1.get(asker);
             for (int responder : askerPrefList){                                    // loop through asker's pref list
-                //System.out.println("LOGGER: Responder: " + responder);
-                //ArrayList<Integer> responderPrefList = null;
                 ArrayList<Integer> responderPrefListInverse = null;
 
                 if (!isAlreadyAsked(responder)) {                                   //not already asked
-                    //responderPrefList = integerPrefList2.get(responder);
                     responderPrefListInverse = integerPrefList2Inverse.get(responder);
                     askerPrefList.set(askerPrefList.indexOf(responder), -1);
                     int currentMatchFlag = getMatch(currentPartners2, responder);
-                    //System.out.println("currentMatchFlag: " + currentMatchFlag);
                     if (currentMatchFlag == -1){                                    //responder is free
-                        //System.out.println("IF");
                         currentPartners1[asker] = responder;
                         currentPartners2[responder] = asker;
                         break;
                     }
                     else if (responderPrefListInverse.get(asker) < currentMatchFlag && currentMatchFlag != -1){
-                        //System.out.println("ELSE IF");                              //responder prefers current asker
+                                                                                    //responder prefers current asker
                         currentPartners1[asker] = responder;
                         currentPartners2[responder] = asker;
                         currentPartners1[currentMatchFlag] = -1;
@@ -121,15 +109,11 @@ public class Match {
                         break;
                     }
                     else {                                                          //responder rejects current asker
-                        //System.out.println("ELSE");
                         continue;
                     }
                 }
             }
         }
-//        for (int m: currentPartners1) {
-//            System.out.println(m);
-//        }
         return currentPartners1;
     }
 }
