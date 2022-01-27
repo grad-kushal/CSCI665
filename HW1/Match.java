@@ -13,6 +13,9 @@ import java.util.Stack;
 public class Match {
 
     public static void main(String[] args) {
+
+
+        /*-------------------INPUT AND PREPROCESSING------------------------------*/
         ArrayList<ArrayList<Integer>> integerPrefList1 = new ArrayList<>();
         ArrayList<ArrayList<Integer>> integerPrefList2 = new ArrayList<>();
         ArrayList<ArrayList<Integer>> integerPrefList2Inverse = new ArrayList<>();
@@ -63,10 +66,25 @@ public class Match {
                 }
             }
 
+            /*-------------------Execute the GS Algorithm------------------------------*/
             int [] result1 = executeGayleShapely(freeAskers, integerPrefList1, integerPrefList2Inverse, currentPartners1, currentPartners2);
+            Arrays.fill(currentPartners1, -1);
+            Arrays.fill(currentPartners2, -1);
+
+            /*-------------------Execute the GS Algorithm on flipped input------------------------------*/
             int [] result2 = executeGayleShapely(freeResponders, integerPrefList2, integerPrefList1Inverse, currentPartners2, currentPartners1);
 
-            System.out.println(Arrays.equals(result1, result2) ? "NO" : "YES");
+            int count = 0;
+            for (int r = 0; r<result2.length; r++) {
+                int temp = result2[r];
+                if(r != result1[temp]){
+                    break;
+                }
+                count++;
+            }
+
+            System.out.println(count == n ? "NO" : "YES");
+
         }catch (Exception e){
             e.printStackTrace();
         }
