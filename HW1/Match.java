@@ -1,3 +1,8 @@
+/**
+ * @author		Kushal Kale
+ * @author      Abhishek Shah
+ */
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -24,7 +29,6 @@ public class Match {
             for (int i = 0; i < 2*n; i++) {
                 ArrayList<Integer> tempPrefList = new ArrayList<>();
                 String temp = br.readLine();
-                //System.out.println("DDD: " + temp);
                 for (String p: temp.split(" ")) {
                     tempPrefList.add(Integer.parseInt(p));
                 }
@@ -52,27 +56,34 @@ public class Match {
 //            }
 
             while (!freeAskers.isEmpty()){
-                int asker = freeAskers.pop();
+                int asker = freeAskers.pop();                                           //take the 1st free asker
                 System.out.println("LOGGER: Asker :" + asker);
                 ArrayList<Integer> askerPrefList = integerPrefList1.get(asker);
-                for (int responder : askerPrefList){
+                for (int responder : askerPrefList){                                    // loop through asker's pref list
                     System.out.println("LOGGER: Responder: " + responder);
-                    if (!isAlreadyAsked(responder)) {
+                    ArrayList<Integer> responderPrefList = null;
+                    if (responder != -1)
+                        responderPrefList = integerPrefList2.get(responder);
+                    if (!isAlreadyAsked(responder)) {                                   //not already asked
                         askerPrefList.set(askerPrefList.indexOf(responder), -1);
                         int currentMatchFlag = getMatch(currentPartners2, responder);
-                        if (currentMatchFlag == -1){            //responder is free
+                        System.out.println("currentMatchFlag: " + currentMatchFlag);
+                        if (currentMatchFlag == -1){                                    //responder is free
+                            System.out.println("IF");
                             currentPartners1[asker] = responder;
                             currentPartners2[responder] = asker;
                             break;
                         }
-                        else if (integerPrefList2.indexOf(asker) < currentMatchFlag){
+                        else if (responderPrefList.indexOf(asker) < currentMatchFlag && currentMatchFlag != -1){
+                            System.out.println("ELSE IF");                              //responder prefers current asker
                             currentPartners1[asker] = responder;
                             currentPartners2[responder] = asker;
-                            currentPartners1[currentMatchFlag] = 0;
+                            currentPartners1[currentMatchFlag] = -1;
                             freeAskers.push(currentMatchFlag);
                             break;
                         }
-                        else {
+                        else {                                                          //responder rejects current asker
+                            System.out.println("ELSE");
                             continue;
                         }
                     }
