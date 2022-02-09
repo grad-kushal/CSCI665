@@ -1,3 +1,8 @@
+/**
+ * @author		Kushal Kale
+ * @author      Arjun Kozhissery
+ */
+
 import java.util.Scanner;
 
 public class Queens {
@@ -5,9 +10,10 @@ public class Queens {
 //        FileInputStream fis = new FileInputStream(new File("/Users/kushalkale/Kushal/CSCI665/HW2/src/input.txt"));
 //        System.setIn(fis);
         Scanner scanner = new Scanner(System.in);
-        int n = scanner.nextInt();
-        scanner.nextLine();
-        int [] r = new int[n];
+        int n = scanner.nextInt();                                              //INPUT SIZE
+        scanner.nextLine();                                                     //SKIP THE STRAY NEWLINE
+
+        int [] r = new int[n];                                                  //ARRAYS TO KEEP TRACK OF QUEENS
         int [] c = new int[n];
         int [] d1 = new int[2*n - 1];
         int [] d2 = new int[2*n -1];
@@ -35,6 +41,5 @@ public class Queens {
             }
         }
         System.out.println(result == true ? "YES" : "NO");
-
     }
 }
