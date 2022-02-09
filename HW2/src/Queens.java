@@ -1,6 +1,6 @@
 /**
- * @author		Kushal Kale
- * @author      Arjun Kozhissery
+ * @author              Kushal Kale
+ * @author              Arjun Kozhissery
  */
 
 import java.util.Scanner;
