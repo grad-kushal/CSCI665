@@ -27,6 +27,7 @@ public class Match {
             Scanner scanner = new Scanner(System.in);
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             int n = scanner.nextInt();
+            scanner.nextLine();
 
             int [] currentPartners1 = new int[n];
             int [] currentPartners2 = new int[n];
@@ -36,7 +37,7 @@ public class Match {
             for (int i = 0; i < 2*n; i++) {
                 ArrayList<Integer> tempPrefList = new ArrayList<>();
                 ArrayList<Integer> tempPrefListInverse = new ArrayList<>(n);
-                String temp = br.readLine();
+                String temp = scanner.nextLine();
                 for (String p: temp.split(" ")) {
                     int num = Integer.parseInt(p);
                     tempPrefList.add(num);
@@ -105,6 +106,7 @@ public class Match {
                                            ArrayList<ArrayList<Integer>> integerPrefList2Inverse, int [] currentPartners1, int [] currentPartners2) {
         while (!freeAskers.isEmpty()){
             int asker = freeAskers.pop();                                           //take the 1st free asker
+            System.out.println("LOGGER: Asker :" + asker);
             ArrayList<Integer> askerPrefList = integerPrefList1.get(asker);
             for (int responder : askerPrefList){                                    // loop through asker's pref list
                 ArrayList<Integer> responderPrefListInverse = null;
