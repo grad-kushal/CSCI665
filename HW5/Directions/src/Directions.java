@@ -49,6 +49,9 @@ class Graph {
         int destination = Integer.parseInt(s[1]);
         this.instance.get(source).neighbors.add("" + destination);
         this.instance.get(destination).neighbors.add("" + source);
+        this.instance.get(source).numberOfNeighbors++;
+        this.instance.get(destination).numberOfNeighbors++;
+
     }
 
     public void addNode(String label){
@@ -96,13 +99,14 @@ class Graph {
                                 flag = true;
                                 break;
                             }
+                            dist = distances[Integer.parseInt(neighbor)];
                             if (newNeighbours.size() > 0) {
                                 String temp = neighbor;
                                 neighbor = newNeighbours.get(0);
                                 visited[Integer.parseInt(neighbor)]++;
                                 newNeighbours = this.instance.get(Integer.parseInt(neighbor)).neighbors;
                                 newNeighbours.remove(temp);
-                                //distances[Integer.parseInt(temp)] = distances[Integer.parseInt(current)];
+                                distances[Integer.parseInt(neighbor)] = dist;
                             }
                         }
                         if (neighbor.equals("" + destination)) {
@@ -131,6 +135,7 @@ class Graph {
 class Node {
     String label;
     ArrayList<String> neighbors;
+    int numberOfNeighbors;
 
     public Node(String label) {
         this.label = label;
