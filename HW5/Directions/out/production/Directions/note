@@ -1,0 +1,13 @@
+think of it in terms of smaller problems... divide and conquer
+What is the cheapest spanning tree using only 1 egde.
+    - cheapest one by the cut property.
+how to connect everything in the each partition, (this is the smaller sub-problem, we can apply the same algo to this.)
+
+Need to figure out which edge to use as 2nd one if 2 edges from a to b are allowed... then 2nd one which one? not necessarily the next cheapest.
+
+
+
+
+no of nodes with nothing going out and coming in. if 2 or more... no..
+if one what?
+
