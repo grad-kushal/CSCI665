@@ -20,7 +20,7 @@ public class Directions {
             String t = s.nextLine();
             g.addEdge(t.split(" "));
         }
-        System.out.println(g.instance);
+        //System.out.println(g.instance);
         int [] distances = g.bfs(origin, destination);
         System.out.println(Arrays.toString(distances));
     }
@@ -61,14 +61,11 @@ class Graph {
 
     public int[] bfs(int origin, int destination) {
         int [] visited = new int[this.numberOfNodes];
-//        Graph resultGraph = new Graph();
-//        resultGraph.addNode("" + origin);
         int [] distances = new int[this.numberOfNodes];
+        Arrays.fill(distances, Integer.MAX_VALUE);
         int dist = 0;
         distances[origin] = dist;
         boolean flag = false;
-//        if (this.instance.get(origin).neighbors.size() > 1)
-//            distances[origin]++;
         LinkedList<String> q = new LinkedList<>();
         visited[origin]++;
         q.add("" + origin);
@@ -80,40 +77,55 @@ class Graph {
                 break;
             }
             ArrayList<String> neighbors = this.instance.get(Integer.parseInt(current)).neighbors;
-            if (neighbors.size() > 1) {
+            if (neighbors.size() > 1 && visited[Integer.parseInt(current)] != 0) {
                 dist++;
             }
             while (!neighbors.isEmpty()) {
                 String neighbor = neighbors.remove(0);
                 if (visited[Integer.parseInt(neighbor)] == 0) {
-                    distances[Integer.parseInt(neighbor)] = dist;
+                    if (dist < distances[Integer.parseInt(neighbor)])
+                        distances[Integer.parseInt(neighbor)] = dist;
                     visited[Integer.parseInt(neighbor)]++;
                     ArrayList<String> newNeighbours = this.instance.get(Integer.parseInt(neighbor)).neighbors;
-                    newNeighbours.remove(current);
-                    if (newNeighbours.size() > 1) {
-                        q.add(neighbor);
+                    //newNeighbours.remove(current);
+                    if (newNeighbours.size() - 1 > 1) {
+                        boolean visitorVisitedFlag = true;
+                        for (String nn : newNeighbours) {
+                            if(visited[Integer.parseInt(nn)] == 0) {
+                                visitorVisitedFlag = false;
+                                break;
+                            }
+                        }
+                        if (visitorVisitedFlag == false) {
+                            q.add(neighbor);
+                        }
                         //distances[Integer.parseInt(neighbor)] = distances[Integer.parseInt(current)]+1;
                     } else {
-                        while (newNeighbours.size() == 1) {
+                        while (newNeighbours.size() -1 == 1) {
                             if (neighbor.equals("" + destination)) {
                                 flag = true;
                                 break;
                             }
                             dist = distances[Integer.parseInt(neighbor)];
-                            if (newNeighbours.size() > 0) {
-                                String temp = neighbor;
-                                neighbor = newNeighbours.get(0);
-                                visited[Integer.parseInt(neighbor)]++;
-                                newNeighbours = this.instance.get(Integer.parseInt(neighbor)).neighbors;
-                                newNeighbours.remove(temp);
-                                distances[Integer.parseInt(neighbor)] = dist;
+                            String n1 = newNeighbours.get(0);
+                            String n2 = newNeighbours.get(1);
+                            if (!(visited[Integer.parseInt(n1)] > 0)) {
+                                neighbor = n1;
+                            } else if (!(visited[Integer.parseInt(n2)] > 0)) {
+                                neighbor = n2;
+                            } else {
+                                break;
                             }
+                            distances[Integer.parseInt(neighbor)] = dist;
+                            visited[Integer.parseInt(neighbor)]++;
+                            newNeighbours = this.instance.get(Integer.parseInt(neighbor)).neighbors;
                         }
                         if (neighbor.equals("" + destination)) {
                             flag = true;
                         }
                         if (flag != true) {
-                            q.add(neighbor);
+                            if (newNeighbours.size() - 1 > 1)
+                                q.add(neighbor);
                             //distances[Integer.parseInt(neighbor)] = distances[Integer.parseInt(current)]++;
                         } else {
                             break;
